@@ -73,12 +73,15 @@ userSchema.methods.generateAuthToken = async function () {
     return token
 }
 
+// toJSON is called everytime JSON.stringify is called
+// JSON.stringyfy is called in res.send()
 userSchema.methods.toJSON = function () {
     const user = this
     const userObject = user.toObject()
 
     delete userObject.password
     delete userObject.tokens
+    delete userObject.avatar
 
     return userObject
 }
