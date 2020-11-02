@@ -4,6 +4,7 @@ const User = require('../models/user')
 const router = express.Router()
 const auth = require('../middleware/auth')
 const sharp = require('sharp')
+const { sendWelcomeEmail } = require('../emails/account')
 
 // create user
 router.post('/users', async (req, res) => {
@@ -12,6 +13,7 @@ router.post('/users', async (req, res) => {
 
     try {
         await user.save()
+        // sendWelcomeEmail(user.email, user.name)
         const token = await user.generateAuthToken()
         res.send({ user, token })
     } catch (e) {
